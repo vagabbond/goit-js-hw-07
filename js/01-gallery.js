@@ -29,9 +29,11 @@ function onItemClick(event) {
     `<img src="${event.target.dataset.source}" width="1400" height="900">`
   );
   modal.show();
-  galleryDiv.addEventListener("keydown", (event) => {
+  const modalListner = function (event) {
     if (event.code === "Escape") {
       modal.close();
+      galleryDiv.removeEventListener("keydown", modalListner);
     }
-  });
+  };
+  galleryDiv.addEventListener("keydown", modalListner);
 }
