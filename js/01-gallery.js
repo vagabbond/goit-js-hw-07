@@ -1,6 +1,7 @@
 import { galleryItems } from "./gallery-items.js";
 const galleryDiv = document.querySelector(".gallery");
 galleryDiv.innerHTML += onCreatePlot(galleryItems);
+let modal;
 function onCreatePlot(galleryItems) {
   return galleryItems
     .map((element) => {
@@ -25,15 +26,17 @@ function onItemClick(event) {
     return;
   }
 
-  const modal = basicLightbox.create(
+  modal = basicLightbox.create(
     `<img src="${event.target.dataset.source}" width="1400" height="900">`
   );
   modal.show();
-  const modalListner = function (event) {
-    if (event.code === "Escape") {
-      modal.close();
-      galleryDiv.removeEventListener("keydown", modalListner);
-    }
-  };
-  galleryDiv.addEventListener("keydown", modalListner);
 }
+const modalListner = function (event) {
+  console.log("sss");
+
+  if (event.code === "Escape") {
+    modal.close();
+  }
+  galleryDiv.removeEventListener("keydown", modalListner);
+};
+galleryDiv.addEventListener("keydown", modalListner);
